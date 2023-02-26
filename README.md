@@ -1,2 +1,2 @@
 # sqwid
-Some simple qtile widgets
+> Simple Qtile WIDgets

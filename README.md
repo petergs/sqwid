@@ -1,2 +1,2 @@
 # sqwid
-> Simple Qtile WIDgets
+> **s**imple **q**tile **wid**gets

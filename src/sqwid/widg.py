@@ -38,7 +38,7 @@ class ProgressBar(base.ThreadPoolText):
     defaults = [
         ("markup", True, "Markup"),
         ("bar_char", EM, "Character used to build the bar."),
-        ("line_char", "|", "Character used to for the level indicator."),
+        ("line_char", "|", "Character used for the level indicator."),
         ("update_interval", 1, "C"),
         ("bar_bg", "grey", ""),
         ("bar_fg", "blue", ""),
@@ -60,8 +60,8 @@ class ProgressBar(base.ThreadPoolText):
 
     def poll(self) -> str:
         cmd = self.check_output_cmd
-        if str(type(cmd)) in ["<class 'function'>", "<class 'method'>"]:
-            output = cmd()  # psutil.virtual_memory().percent
+        if callable(cmd):
+            output = cmd()
         elif type(cmd) in [list, str]:
             output = int(
                 float(subprocess.check_output(cmd, shell=True).decode().strip())
@@ -74,7 +74,7 @@ class ProgressBar(base.ThreadPoolText):
         y = round(output / self.scale)
         ramp = self.bar_char * int((self.max_value / self.scale))
         if self.markup:
-            line = f"<span color='{self.bar_fg}'>{ramp[:y]}</span>{self.      line_char}<span color='{self.bar_bg}'>{ramp[y:]}</span>"
+            line = f"<span color='{self.bar_fg}'>{ramp[:y]}</span>{self.line_char}<span color='{self.bar_bg}'>{ramp[y:]}</span>"
         else:
             line = f"{ramp[:y]}{self.line_char}{ramp[y:]}"
         return line
